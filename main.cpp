@@ -16,21 +16,25 @@ public:
     // 回傳一顆好晶片的索引；若無法找到則回傳 -1
     int findGoodChip(vector<int> chips) {
         // TODO:
-        // 反覆執行下列步驟：
-        //
-        // 1. 若 chips 中只剩一顆晶片，直接回傳它的索引
-        //
-        // 2. 令第一顆晶片為候選晶片 A
-        //
-        // 3. 設 V = 0
-        //
-        // 4. 將 A 與其餘晶片逐一互測：
-        //    若 A 說 B 是好的，且 B 說 A 是好的，則 V++
-        //
-        // 5. 若 V >= n/2，回傳 A
-        //
-        // 6. 否則刪除 A，對剩下的晶片重複測試
+        while (!chips.empty()) {
+            if (chips.size() == 1) {
+                return chips[0];
+            }
 
+            int A = chips[0];
+            int n = chips.size();
+            int V = 0;
+            for (int i = 1; i < n; i++) {
+                int B = chips[i];
+                if (report[A][B] == true && report[B][A] == true) {
+                    V++;
+                }
+            }
+            if (V >= n / 2) {
+                return A;
+            }
+            chips.erase(chips.begin());
+        }
         return -1; // 請修改
     }
 };
